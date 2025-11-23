@@ -104,6 +104,19 @@ const Gallery = () => {
             variants={fadeInUp}
             className="text-center"
           >
+            <motion.div
+              className="inline-block mb-6"
+              animate={{ 
+                rotate: [0, 10, -10, 10, 0],
+                scale: [1, 1.1, 1.1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 0.6,
+                ease: "easeInOut"
+              }}
+            >
+              <i className="fas fa-video text-6xl md:text-7xl text-white mb-4"></i>
+            </motion.div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               <span className="gradient-text-white">Gallery Video</span>
             </h1>
