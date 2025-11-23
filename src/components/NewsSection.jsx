@@ -111,55 +111,57 @@ const NewsSection = () => {
               variants={staggerContainer}
             >
               {pinnedNews.map((news, index) => (
-                <motion.article
+                <Link
                   key={news.id}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
-                  variants={scaleIn}
-                  whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+                  to={`/artikel/${news.id}`}
+                  className="block"
                 >
-                  <div className={`h-48 bg-gradient-to-r from-${getCategoryColor(news.category)}-400 to-${getCategoryColor(news.category)}-600 flex items-center justify-center relative overflow-hidden`}>
-                    <img
-                      src={news.image}
-                      alt={news.title}
-                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        e.target.nextElementSibling.style.display = 'flex';
-                      }}
-                    />
-                    <div className={`absolute inset-0 bg-gradient-to-r from-${getCategoryColor(news.category)}-400 to-${getCategoryColor(news.category)}-600 hidden items-center justify-center`}>
-                      <i className="fas fa-newspaper text-6xl text-white"></i>
+                  <motion.article
+                    className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer h-full"
+                    variants={scaleIn}
+                    whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+                  >
+                    <div className={`h-48 bg-gradient-to-r from-${getCategoryColor(news.category)}-400 to-${getCategoryColor(news.category)}-600 flex items-center justify-center relative overflow-hidden`}>
+                      <img
+                        src={news.image}
+                        alt={news.title}
+                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-r from-${getCategoryColor(news.category)}-400 to-${getCategoryColor(news.category)}-600 hidden items-center justify-center`}>
+                        <i className="fas fa-newspaper text-6xl text-white"></i>
+                      </div>
+                      {/* Pin Badge */}
+                      <div className="absolute top-3 right-3 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                        <i className="fas fa-thumbtack"></i>
+                        Pinned
+                      </div>
                     </div>
-                    {/* Pin Badge */}
-                    <div className="absolute top-3 right-3 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
-                      <i className="fas fa-thumbtack"></i>
-                      Pinned
+                    <div className="p-6">
+                      <div className="flex items-center text-sm text-gray-500 mb-3">
+                        <i className="fas fa-calendar mr-2"></i>
+                        <span>{formatDate(news.date)}</span>
+                        <span className="mx-2">•</span>
+                        <span className={`bg-${getCategoryColor(news.category)}-100 text-${getCategoryColor(news.category)}-800 px-2 py-1 rounded-full text-xs`}>
+                          {news.category}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                        {news.title}
+                      </h3>
+                      <p className="text-gray-600 mb-4 line-clamp-3">
+                        {news.excerpt}
+                      </p>
+                      <div className={`inline-flex items-center text-${getCategoryColor(news.category)}-600 hover:text-${getCategoryColor(news.category)}-700 font-semibold group`}>
+                        <i className="fas fa-arrow-right mr-2 group-hover:translate-x-1 transition-transform"></i>
+                        Baca Selengkapnya
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center text-sm text-gray-500 mb-3">
-                      <i className="fas fa-calendar mr-2"></i>
-                      <span>{formatDate(news.date)}</span>
-                      <span className="mx-2">•</span>
-                      <span className={`bg-${getCategoryColor(news.category)}-100 text-${getCategoryColor(news.category)}-800 px-2 py-1 rounded-full text-xs`}>
-                        {news.category}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                      {news.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">
-                      {news.excerpt}
-                    </p>
-                    <Link
-                      to={`/artikel/${news.id}`}
-                      className={`inline-flex items-center text-${getCategoryColor(news.category)}-600 hover:text-${getCategoryColor(news.category)}-700 font-semibold group`}
-                    >
-                      <i className="fas fa-arrow-right mr-2 group-hover:translate-x-1 transition-transform"></i>
-                      Baca Selengkapnya
-                    </Link>
-                  </div>
-                </motion.article>
+                  </motion.article>
+                </Link>
               ))}
             </motion.div>
 
