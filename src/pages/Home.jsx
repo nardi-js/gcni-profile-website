@@ -268,92 +268,99 @@ const Home = () => {
             variants={staggerContainer}
           >
             {/* Tahfidz */}
-            <motion.div 
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
-              variants={scaleIn}
-              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://res.cloudinary.com/dof6csq4i/image/upload/v1758594705/pesantren/blog/f9blppo5nwwwgja39wp7.png" 
-                  alt="Program Tahfidz"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Tahfidz</h3>
-                <p className="text-sm text-emerald-600 mb-3">Program Hafalan Al-Qur'an</p>
-                <p className="text-gray-600 mb-4">
-                  Program intensif hafalan Al-Qur'an dengan metode terbukti dan bimbingan ustadz berpengalaman.
-                </p>
-                <Link to="/program" className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-semibold">
-                  <i className="fas fa-arrow-right mr-2"></i>
-                  Selengkapnya
-                </Link>
-              </div>
-            </motion.div>
+            <Link to="/program" className="block">
+              <motion.div 
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer h-full"
+                variants={scaleIn}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src="https://res.cloudinary.com/dof6csq4i/image/upload/v1758594705/pesantren/blog/f9blppo5nwwwgja39wp7.png" 
+                    alt="Program Tahfidz"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Tahfidz</h3>
+                  <p className="text-sm text-emerald-600 mb-3">Program Hafalan Al-Qur'an</p>
+                  <p className="text-gray-600 mb-4">
+                    Program intensif hafalan Al-Qur'an dengan metode terbukti dan bimbingan ustadz berpengalaman.
+                  </p>
+                  <div className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-semibold">
+                    <i className="fas fa-arrow-right mr-2"></i>
+                    Selengkapnya
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
 
             {/* Courtesy */}
-            <motion.div 
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
-              variants={scaleIn}
-              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://res.cloudinary.com/dtcfexttw/image/upload/v1759675078/IMG_20210304_055050_xkk59n.jpg" 
-                  alt="Program Courtesy"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Courtesy</h3>
-                <p className="text-sm text-yellow-600 mb-3">Pendidikan Karakter & Adab</p>
-                <p className="text-gray-600 mb-4">
-                  Pembentukan akhlak mulia, etika, dan sopan santun sebagai dasar kepribadian Islami.
-                </p>
-                <Link to="/program" className="inline-flex items-center text-yellow-600 hover:text-yellow-700 font-semibold">
-                  <i className="fas fa-arrow-right mr-2"></i>
-                  Selengkapnya
-                </Link>
-              </div>
-            </motion.div>
+            <Link to="/program" className="block">
+              <motion.div 
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer h-full"
+                variants={scaleIn}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src="https://res.cloudinary.com/dtcfexttw/image/upload/v1759675078/IMG_20210304_055050_xkk59n.jpg" 
+                    alt="Program Courtesy"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Courtesy</h3>
+                  <p className="text-sm text-yellow-600 mb-3">Pendidikan Karakter & Adab</p>
+                  <p className="text-gray-600 mb-4">
+                    Pembentukan akhlak mulia, etika, dan sopan santun sebagai dasar kepribadian Islami.
+                  </p>
+                  <div className="inline-flex items-center text-yellow-600 hover:text-yellow-700 font-semibold">
+                    <i className="fas fa-arrow-right mr-2"></i>
+                    Selengkapnya
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
 
             {/* Entrepreneurship */}
-            <motion.div 
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
-              variants={scaleIn}
-              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img 
-                  src="https://res.cloudinary.com/dtcfexttw/image/upload/v1759675082/_storage_emulated_0_Android_data_com.miui.gallery_cache_SecurityShare_IMG20250707_091615_lmc_8.4_p4w0v8.jpg" 
-                  alt="Program Entrepreneurship"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Entrepreneurship</h3>
-                <p className="text-sm text-blue-600 mb-3">Kewirausahaan</p>
-                <p className="text-gray-600 mb-4">
-                  Mengembangkan jiwa wirausaha, kreativitas, dan kemandirian ekonomi sejak dini.
-                </p>
-                <Link to="/program" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold">
-                  <i className="fas fa-arrow-right mr-2"></i>
-                  Selengkapnya
-                </Link>
-              </div>
-            </motion.div>
+            <Link to="/program" className="block">
+              <motion.div 
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer h-full"
+                variants={scaleIn}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+              >
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src="https://res.cloudinary.com/dtcfexttw/image/upload/v1759675082/_storage_emulated_0_Android_data_com.miui.gallery_cache_SecurityShare_IMG20250707_091615_lmc_8.4_p4w0v8.jpg" 
+                    alt="Program Entrepreneurship"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Entrepreneurship</h3>
+                  <p className="text-sm text-blue-600 mb-3">Kewirausahaan</p>
+                  <p className="text-gray-600 mb-4">
+                    Mengembangkan jiwa wirausaha, kreativitas, dan kemandirian ekonomi sejak dini.
+                  </p>
+                  <div className="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold">
+                    <i className="fas fa-arrow-right mr-2"></i>
+                    Selengkapnya
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
 
             {/* International Program */}
-            <motion.div 
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
-              variants={scaleIn}
-              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
-            >
+            <Link to="/program" className="block">
+              <motion.div 
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer h-full"
+                variants={scaleIn}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+              >
               <div className="h-48 overflow-hidden relative">
                 <img 
                   src="https://res.cloudinary.com/dof6csq4i/image/upload/v1758591275/santri_zzlfdp.jpg" 
@@ -368,19 +375,21 @@ const Home = () => {
                 <p className="text-gray-600 mb-4">
                   Program dengan standar internasional Cambridge untuk daya saing global.
                 </p>
-                <Link to="/program" className="inline-flex items-center text-purple-600 hover:text-purple-700 font-semibold">
+                <div className="inline-flex items-center text-purple-600 hover:text-purple-700 font-semibold">
                   <i className="fas fa-arrow-right mr-2"></i>
                   Selengkapnya
-                </Link>
+                </div>
               </div>
             </motion.div>
+            </Link>
 
             {/* Language Development Center */}
-            <motion.div 
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
-              variants={scaleIn}
-              whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
-            >
+            <Link to="/program" className="block">
+              <motion.div 
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer h-full"
+                variants={scaleIn}
+                whileHover={{ y: -8, scale: 1.02, transition: { duration: 0.3 } }}
+              >
               <div className="h-48 overflow-hidden relative">
                 <img 
                   src="https://res.cloudinary.com/dtcfexttw/image/upload/v1759675073/f_bi8ais.jpg" 
@@ -395,12 +404,13 @@ const Home = () => {
                 <p className="text-gray-600 mb-4">
                   Pusat pengembangan kemampuan berbahasa Arab dan Inggris secara intensif.
                 </p>
-                <Link to="/program" className="inline-flex items-center text-red-600 hover:text-red-700 font-semibold">
+                <div className="inline-flex items-center text-red-600 hover:text-red-700 font-semibold">
                   <i className="fas fa-arrow-right mr-2"></i>
                   Selengkapnya
-                </Link>
+                </div>
               </div>
             </motion.div>
+            </Link>
           </motion.div>
 
           <motion.div 
