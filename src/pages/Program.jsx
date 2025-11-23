@@ -37,6 +37,13 @@ const Program = () => {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
+  // Cleanup: Reset body overflow when component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   const programs = [
     {
       id: 'tahfidz',
