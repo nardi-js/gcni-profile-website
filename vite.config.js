@@ -11,18 +11,24 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Vendor chunks
+          // Vendor chunks - optimize bundle splitting
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'firebase-vendor': ['firebase/app', 'firebase/firestore', 'firebase/auth'],
           'motion-vendor': ['framer-motion'],
-          
-          // Page chunks
-          'pages-home': ['./src/pages/Home.jsx'],
-          'pages-berita': ['./src/pages/Berita.jsx'],
-          'pages-artikel': ['./src/pages/Artikel.jsx'],
-          'pages-program': ['./src/pages/Program.jsx'],
-          'pages-pendaftaran': ['./src/pages/Pendaftaran.jsx'],
-        }
+        },
+        // Optimize asset naming
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/images/[name]-[hash][extname]`;
+          } else if (/woff|woff2|eot|ttf|otf/i.test(ext)) {
+            return `assets/fonts/[name]-[hash][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
       }
     },
     chunkSizeWarningLimit: 1000,
@@ -31,8 +37,22 @@ export default defineConfig({
     terserOptions: {
       compress: {
         drop_console: true,
-        drop_debugger: true
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+      },
+      format: {
+        comments: false,
       }
-    }
-  }
+    },
+    // Optimize CSS
+    cssCodeSplit: true,
+    cssMinify: true,
+    // Optimize assets
+    assetsInlineLimit: 4096, // 4kb - inline small assets as base64
+    reportCompressedSize: false, // Faster build
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'firebase/app', 'firebase/firestore', 'firebase/auth', 'framer-motion'],
+  },
 })

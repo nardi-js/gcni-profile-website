@@ -1,10 +1,10 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getUnreadCount } from '../services/messageService';
 import { useAuth } from '../context/AuthContext';
 import { logout } from '../services/authService';
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -45,6 +45,18 @@ const AdminLayout = ({ children }) => {
       icon: 'fa-envelope',
       label: 'Pesan Kontak',
       badge: unreadCount > 0 ? unreadCount : null
+    },
+    {
+      path: '/admin/videos',
+      icon: 'fa-video',
+      label: 'Kelola Video',
+      badge: null
+    },
+    {
+      path: '/admin/posters',
+      icon: 'fa-images',
+      label: 'Kelola Poster',
+      badge: null
     }
   ];
 
@@ -88,8 +100,19 @@ const AdminLayout = ({ children }) => {
         {/* Logo */}
         <div className="p-6 border-b">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-lg flex items-center justify-center">
-              <i className="fas fa-shield-alt text-white text-2xl"></i>
+            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-teal-600 overflow-hidden">
+              <img 
+                src="/logo-gcni.png" 
+                alt="GCNI Logo" 
+                className="w-10 h-10 object-contain"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextElementSibling.style.display = 'flex';
+                }}
+              />
+              <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-teal-700 rounded-full hidden items-center justify-center">
+                <i className="fas fa-shield-alt text-white text-2xl"></i>
+              </div>
             </div>
             <div>
               <h2 className="text-xl font-bold text-gray-900">Admin GCNI</h2>
@@ -169,7 +192,7 @@ const AdminLayout = ({ children }) => {
 
       {/* Main Content */}
       <div className="lg:ml-64">
-        {children}
+        <Outlet />
       </div>
 
       {/* Logout Confirmation Modal */}

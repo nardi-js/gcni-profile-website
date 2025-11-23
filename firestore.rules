@@ -41,6 +41,28 @@ service cloud.firestore {
     }
     
     // ========================================
+    // VIDEOS COLLECTION
+    // ========================================
+    match /videos/{videoId} {
+      // Anyone can read
+      allow read: if true;
+      
+      // Only admins can write
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ========================================
+    // POSTERS COLLECTION
+    // ========================================
+    match /posters/{posterId} {
+      // Anyone can read
+      allow read: if true;
+      
+      // Only admins can write
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ========================================
     // ADMINS COLLECTION
     // ========================================
     match /admins/{email} {

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { createNews, getAllNews, updateNews, deleteNews } from '../../services/newsService';
-import AdminLayout from '../../components/AdminLayout';
+import { createNews, getAllNews, updateNews, deleteNews, togglePinNews } from '../../services/newsService';
 
 const AdminNews = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -13,7 +12,8 @@ const AdminNews = () => {
     author: 'Admin GCNI',
     image: '',
     content: '',
-    tags: ''
+    tags: '',
+    isPinned: false
   });
 
   const [editMode, setEditMode] = useState(false);
@@ -88,7 +88,8 @@ const AdminNews = () => {
       author: news.author,
       image: news.image,
       content: news.content || '',
-      tags: Array.isArray(news.tags) ? news.tags.join(', ') : news.tags || ''
+      tags: Array.isArray(news.tags) ? news.tags.join(', ') : news.tags || '',
+      isPinned: news.isPinned || false
     });
     setEditMode(true);
     setEditId(news.id);
@@ -111,6 +112,18 @@ const AdminNews = () => {
     }
   };
 
+  const handleTogglePin = async (id, currentPinStatus) => {
+    const newPinStatus = !currentPinStatus;
+    const result = await togglePinNews(id, newPinStatus);
+    
+    if (result.success) {
+      alert(result.message);
+      loadNews(); // Reload data
+    } else {
+      alert(result.message + '\nError: ' + result.error);
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       slug: '',
@@ -121,7 +134,8 @@ const AdminNews = () => {
       author: 'Admin GCNI',
       image: '',
       content: '',
-      tags: ''
+      tags: '',
+      isPinned: false
     });
     setEditMode(false);
     setEditId(null);
@@ -129,9 +143,8 @@ const AdminNews = () => {
   };
 
   return (
-    <AdminLayout>
-      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -325,6 +338,26 @@ const AdminNews = () => {
                 />
               </div>
 
+              {/* Row 7: Pin to Homepage */}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <label className="flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="isPinned"
+                    checked={formData.isPinned}
+                    onChange={(e) => setFormData(prev => ({ ...prev, isPinned: e.target.checked }))}
+                    className="w-5 h-5 text-teal-600 border-gray-300 rounded focus:ring-teal-500 focus:ring-2"
+                  />
+                  <span className="ml-3 text-sm font-semibold text-gray-700">
+                    <i className="fas fa-thumbtack text-yellow-600 mr-2"></i>
+                    Pin berita ini ke halaman beranda
+                  </span>
+                </label>
+                <p className="text-xs text-gray-600 mt-2 ml-8">
+                  Berita yang di-pin akan ditampilkan di section berita pada homepage (maksimal 3 berita terbaru)
+                </p>
+              </div>
+
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
                 <button
@@ -488,12 +521,27 @@ const AdminNews = () => {
                           <i className="fas fa-user text-gray-400"></i>
                           {news.author}
                         </div>
+                        {news.isPinned && (
+                          <div className="flex items-center gap-1 mt-1">
+                            <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">
+                              <i className="fas fa-thumbtack"></i>
+                              Pinned
+                            </span>
+                          </div>
+                        )}
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex items-center justify-center gap-2">
                           <button
+                            onClick={() => handleTogglePin(news.id, news.isPinned)}
+                            className={`${news.isPinned ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-gray-400 hover:bg-gray-500'} text-white p-2 rounded-lg transition-colors`}
+                            title={news.isPinned ? 'Unpin dari Homepage' : 'Pin ke Homepage'}
+                          >
+                            <i className="fas fa-thumbtack"></i>
+                          </button>
+                          <button
                             onClick={() => handleEdit(news)}
-                            className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg transition-colors"
+                            className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition-colors"
                             title="Edit"
                           >
                             <i className="fas fa-edit"></i>
@@ -570,10 +618,26 @@ const AdminNews = () => {
                   </span>
                 </div>
 
+                {news.isPinned && (
+                  <div className="mb-3">
+                    <span className="inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">
+                      <i className="fas fa-thumbtack"></i>
+                      Pinned ke Homepage
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex gap-2">
                   <button
+                    onClick={() => handleTogglePin(news.id, news.isPinned)}
+                    className={`flex-1 ${news.isPinned ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-gray-400 hover:bg-gray-500'} text-white py-2 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2`}
+                  >
+                    <i className="fas fa-thumbtack"></i>
+                    {news.isPinned ? 'Unpin' : 'Pin'}
+                  </button>
+                  <button
                     onClick={() => handleEdit(news)}
-                    className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                    className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                   >
                     <i className="fas fa-edit"></i>
                     Edit
@@ -591,9 +655,8 @@ const AdminNews = () => {
             </div>
           )}
         </div>
-        </div>
       </div>
-    </AdminLayout>
+    </div>
   );
 };
 
