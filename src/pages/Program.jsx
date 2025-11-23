@@ -229,9 +229,10 @@ const Program = () => {
             {programs.map((program, index) => (
               <motion.div 
                 key={program.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover-lift cursor-pointer"
                 {...staggerItem(index)}
                 {...cardHover}
+                onClick={() => openModal(program.id)}
               >
                 <div className={`h-64 bg-gradient-to-r ${colorClasses[program.color].gradient} flex items-center justify-center overflow-hidden relative`}>
                   {program.image && !imageErrors[program.id] ? (
@@ -251,13 +252,10 @@ const Program = () => {
                   <p className="text-gray-600 mb-6 leading-relaxed">
                     {program.description}
                   </p>
-                  <button 
-                    onClick={() => openModal(program.id)}
-                    className={`inline-flex items-center ${colorClasses[program.color].button} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105`}
-                  >
+                  <div className={`inline-flex items-center ${colorClasses[program.color].button} text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105`}>
                     <i className="fas fa-info-circle mr-2"></i>
                     Detail Program
-                  </button>
+                  </div>
                 </div>
               </motion.div>
             ))}
