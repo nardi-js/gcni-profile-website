@@ -30,6 +30,7 @@ export const createNews = async (newsData) => {
     const newsToSave = {
       ...newsData,
       tags,
+      isPinned: newsData.isPinned || false,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     };
@@ -165,6 +166,7 @@ export const updateNews = async (id, newsData) => {
     const newsToUpdate = {
       ...newsData,
       tags,
+      isPinned: newsData.isPinned !== undefined ? newsData.isPinned : false,
       updatedAt: serverTimestamp()
     };
 
@@ -238,6 +240,91 @@ export const getNewsByCategory = async (category) => {
       success: false,
       error: error.message,
       data: []
+    };
+  }
+};
+
+/**
+ * Get pinned news for homepage
+ */
+export const getPinnedNews = async (limit = 3) => {
+  try {
+    const newsRef = collection(db, NEWS_COLLECTION);
+    
+    // Try with compound query first (requires Firestore index)
+    try {
+      const q = query(newsRef, where('isPinned', '==', true), orderBy('date', 'desc'));
+      const querySnapshot = await getDocs(q);
+      
+      const newsList = [];
+      querySnapshot.forEach((doc) => {
+        newsList.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+
+      // Limit the results
+      return {
+        success: true,
+        data: newsList.slice(0, limit)
+      };
+    } catch (indexError) {
+      // If index not created yet, fallback to client-side filtering
+      console.warn('Firestore index not found, using client-side filtering:', indexError.message);
+      
+      const querySnapshot = await getDocs(newsRef);
+      const newsList = [];
+      
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.isPinned === true) {
+          newsList.push({
+            id: doc.id,
+            ...data
+          });
+        }
+      });
+
+      // Sort by date and limit
+      newsList.sort((a, b) => new Date(b.date) - new Date(a.date));
+      
+      return {
+        success: true,
+        data: newsList.slice(0, limit)
+      };
+    }
+  } catch (error) {
+    console.error('Error getting pinned news:', error);
+    return {
+      success: false,
+      error: error.message,
+      data: []
+    };
+  }
+};
+
+/**
+ * Toggle pin status of a news article
+ */
+export const togglePinNews = async (id, isPinned) => {
+  try {
+    const newsRef = doc(db, NEWS_COLLECTION, id);
+    await updateDoc(newsRef, {
+      isPinned: isPinned,
+      updatedAt: serverTimestamp()
+    });
+
+    return {
+      success: true,
+      message: isPinned ? 'Berita berhasil di-pin!' : 'Pin berita berhasil dihapus!'
+    };
+  } catch (error) {
+    console.error('Error toggling pin news:', error);
+    return {
+      success: false,
+      error: error.message,
+      message: 'Gagal mengubah status pin berita!'
     };
   }
 };

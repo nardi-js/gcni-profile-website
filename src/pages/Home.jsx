@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import PosterSlideshow from '../components/PosterSlideshow';
 import VideoGallery from '../components/VideoGallery';
+import NewsSection from '../components/NewsSection';
 
 const Home = () => {
   useEffect(() => {
@@ -422,6 +423,9 @@ const Home = () => {
 
       {/* Video Gallery Section */}
       <VideoGallery />
+
+      {/* News Section - Berita yang di-pin */}
+      <NewsSection />
 
       {/* Quick Links Section - Navigasi ke halaman penting */}
       <section className="py-20 bg-gradient-to-br from-emerald-50 via-white to-teal-50">

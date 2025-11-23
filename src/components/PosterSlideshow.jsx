@@ -9,6 +9,19 @@ const PosterSlideshow = () => {
   const [loading, setLoading] = useState(true);
   const [fullscreenImage, setFullscreenImage] = useState(null);
 
+  // Disable scroll when fullscreen is open
+  useEffect(() => {
+    if (fullscreenImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [fullscreenImage]);
+
   useEffect(() => {
     fetchPosters();
   }, []);
@@ -149,17 +162,17 @@ const PosterSlideshow = () => {
         {/* Navigation Arrows */}
         <button
           onClick={goToPrevious}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 z-10"
+          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-emerald-600 hover:bg-emerald-700 md:bg-white/20 md:hover:bg-white/40 md:backdrop-blur-sm text-white p-2 md:p-3 rounded-full transition-all duration-300 hover:scale-110 z-10 shadow-lg"
           aria-label="Previous slide"
         >
-          <i className="fas fa-chevron-left text-xl"></i>
+          <i className="fas fa-chevron-left text-sm md:text-xl"></i>
         </button>
         <button
           onClick={goToNext}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-300 hover:scale-110 z-10"
+          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-emerald-600 hover:bg-emerald-700 md:bg-white/20 md:hover:bg-white/40 md:backdrop-blur-sm text-white p-2 md:p-3 rounded-full transition-all duration-300 hover:scale-110 z-10 shadow-lg"
           aria-label="Next slide"
         >
-          <i className="fas fa-chevron-right text-xl"></i>
+          <i className="fas fa-chevron-right text-sm md:text-xl"></i>
         </button>
       </div>
 
@@ -191,7 +204,7 @@ const PosterSlideshow = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center p-4 overflow-hidden"
             onClick={() => setFullscreenImage(null)}
           >
             {/* Close Button */}
@@ -202,29 +215,40 @@ const PosterSlideshow = () => {
               <i className="fas fa-times text-3xl"></i>
             </button>
 
-            {/* Image Container */}
+            {/* Image Container - Stack vertically (gambar di atas, teks di bawah) */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", damping: 25 }}
-              className="relative max-w-7xl max-h-[90vh] w-full"
+              className="flex flex-col items-center justify-start w-full max-w-7xl h-full overflow-y-auto py-4 md:py-8 px-2 md:px-4"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Image with overlay */}
-              <img
-                src={fullscreenImage.imageUrl}
-                alt={fullscreenImage.title}
-                className="w-full h-full object-contain rounded-lg"
-              />
+              {/* Image */}
+              <div className="relative w-full flex-shrink-0 flex items-center justify-center mb-4 md:mb-6">
+                <img
+                  src={fullscreenImage.imageUrl}
+                  alt={fullscreenImage.title}
+                  className="max-w-full max-h-[60vh] md:max-h-[70vh] object-contain rounded-lg shadow-2xl"
+                  style={{ display: 'block' }}
+                  onLoad={(e) => {
+                    // Set description box width to match image width
+                    const descBox = e.target.parentElement.nextElementSibling;
+                    if (descBox) {
+                      descBox.style.width = e.target.offsetWidth + 'px';
+                      descBox.style.maxWidth = '100%'; // Ensure it doesn't overflow on mobile
+                    }
+                  }}
+                />
+              </div>
               
-              {/* Image Info - Overlay at bottom */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 md:p-8 rounded-b-lg">
-                <h3 className="text-white text-xl md:text-3xl font-bold mb-2">
+              {/* Image Info - Always below image, width matches image */}
+              <div className="bg-gray-900/90 backdrop-blur-sm rounded-lg md:rounded-xl p-4 md:p-8 shadow-2xl">
+                <h3 className="text-white text-lg md:text-3xl font-bold mb-3 md:mb-4">
                   {fullscreenImage.title}
                 </h3>
                 {fullscreenImage.description && (
-                  <p className="text-gray-200 text-sm md:text-lg leading-relaxed">
+                  <p className="text-gray-200 text-xs md:text-lg leading-relaxed whitespace-pre-wrap break-words">
                     {fullscreenImage.description}
                   </p>
                 )}

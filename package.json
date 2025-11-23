@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:sitemap-news && vite build",
+    "build": "vite build",
+    "build:full": "npm run generate:sitemap-news && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate:sitemap-news": "node scripts/generateNewsSitemap.js"
+    "generate:sitemap-news": "node scripts/generateNewsSitemap.js",
+    "deploy": "npm run build && firebase deploy --only hosting"
   },
   "dependencies": {
     "firebase": "^12.6.0",
