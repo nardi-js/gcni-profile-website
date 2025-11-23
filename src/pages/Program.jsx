@@ -330,7 +330,7 @@ const Program = () => {
               </div>
               <div className="flex gap-4 mt-6">
                 <Link 
-                  to="/kontak" 
+                  to="/pendaftaran" 
                   className={`${colorClasses[program.color].button} text-white px-6 py-2 rounded-lg font-semibold transition-all`}
                 >
                   {program.id === 'kajian' ? 'Ikuti Kajian' : 'Daftar Sekarang'}
