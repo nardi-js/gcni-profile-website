@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { createNews, getAllNews, updateNews, deleteNews } from '../../services/newsService';
-import AdminLayout from '../../components/AdminLayout';
 
 const AdminNews = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -129,9 +128,8 @@ const AdminNews = () => {
   };
 
   return (
-    <AdminLayout>
-      <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="bg-white rounded-lg shadow-md p-4 sm:p-6 mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -591,9 +589,8 @@ const AdminNews = () => {
             </div>
           )}
         </div>
-        </div>
       </div>
-    </AdminLayout>
+    </div>
   );
 };
 

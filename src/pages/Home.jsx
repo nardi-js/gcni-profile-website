@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
+import PosterSlideshow from '../components/PosterSlideshow';
+import VideoGallery from '../components/VideoGallery';
 
 const Home = () => {
   useEffect(() => {
@@ -94,6 +96,63 @@ const Home = () => {
               <i className="fas fa-heart mr-2"></i>
               Donasi Sekarang
             </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Poster & Promosi Section */}
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-emerald-50">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="text-center mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              <span className="gradient-text">Poster & Promosi</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Informasi terkini seputar event, PPDB, pengumuman, dan kegiatan GCNI
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <PosterSlideshow />
+          </motion.div>
+
+          <motion.div 
+            className="text-center mt-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <div className="space-y-2 mb-4">
+              <p className="text-gray-600">
+                <i className="fas fa-info-circle mr-2 text-emerald-600"></i>
+                Poster berganti otomatis setiap 5 detik
+              </p>
+              <p className="text-gray-600">
+                <i className="fas fa-expand mr-2 text-blue-600"></i>
+                Klik pada gambar untuk melihat fullscreen
+              </p>
+            </div>
+            <a
+              href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              <i className="fas fa-download mr-2"></i>
+              Download Poster
+            </a>
           </motion.div>
         </div>
       </section>
@@ -360,6 +419,9 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Video Gallery Section */}
+      <VideoGallery />
 
       {/* Quick Links Section - Navigasi ke halaman penting */}
       <section className="py-20 bg-gradient-to-br from-emerald-50 via-white to-teal-50">
